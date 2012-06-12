@@ -50,9 +50,25 @@ void TimedEventClass::addTimer(short eventId, unsigned long intervalMillis, void
 	this->currentTimer->intervalMillis = intervalMillis; 
 	this->currentTimer->onEvent = onEvent;
 	this->currentTimer->enabled = false;
+	this->currentTimer->looping = true;
 	
 	this->count++;
 }
+
+
+void addDelayed(short eventId, unsigned long intervalMillis, void (*onEvent)(TimerInformation* Sender))
+{
+  this->addTimer(eventId, intervalMillis, onEvent);
+	this->currentTimer->looping = false;
+}
+
+void addDelayed(unsigned long intervalMillis, void (*onEvent)(TimerInformation* Sender))
+{
+  this->addDelayed(DEFAULT_TIMER_ID, intervalMillis, onEvent);
+	this->currentTimer->enabled = true;
+	this->currentTimer->lastEventMillis = millis(); 
+}
+	
 
 void TimedEventClass::setPosition(short Position) {
 	this->currentTimer = this->timers+Position;
@@ -77,6 +93,10 @@ void TimedEventClass::loop() {
 			
 			if (this->currentTimer->lastEventMillis+this->currentTimer->intervalMillis <= this->lastMillis) {
 				this->currentTimer->lastEventMillis = this->lastMillis;
+				if (this->currentTimer->looping == false)
+				{
+				  this->currentTimer->enabled = false;
+				}
 				this->currentTimer->onEvent(this->currentTimer);
 			}
 		}

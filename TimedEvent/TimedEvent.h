@@ -37,6 +37,7 @@
 struct TimerInformation {
 	short eventId;
 	bool enabled;
+	bool looping;
 	unsigned long intervalMillis;
 	unsigned long lastEventMillis;
 	void (*onEvent)(TimerInformation* Sender);
@@ -48,6 +49,8 @@ class TimedEventClass
     TimedEventClass();
 	void addTimer(short eventId, unsigned long intervalMillis, void (*onEvent)(TimerInformation* Sender));
 	void addTimer(unsigned long intervalMillis, void (*onEvent)(TimerInformation* Sender));
+	void addDelayed(short eventId, unsigned long intervalMillis, void (*onEvent)(TimerInformation* Sender));
+	void addDelayed(unsigned long intervalMillis, void (*onEvent)(TimerInformation* Sender));
 	void start(short eventId);
 	void stop(short eventId);
 	void loop();
