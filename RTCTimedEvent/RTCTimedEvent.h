@@ -30,7 +30,11 @@
 #define TimedEvent_h
 
 #include <stdlib.h>
+#if defined(ARDUINO) && ARDUINO >= 100
+#include "Arduino.h"
+#else
 #include "WProgram.h"
+#endif
 #include <Wire.h>
 
 #define RTC_ADDRESS_DS1307 0x68
