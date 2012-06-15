@@ -56,13 +56,13 @@ void TimedEventClass::addTimer(short eventId, unsigned long intervalMillis, void
 }
 
 
-void addDelayed(short eventId, unsigned long intervalMillis, void (*onEvent)(TimerInformation* Sender))
+void TimedEventClass::addDelayed(short eventId, unsigned long intervalMillis, void (*onEvent)(TimerInformation* Sender))
 {
   this->addTimer(eventId, intervalMillis, onEvent);
 	this->currentTimer->looping = false;
 }
 
-void addDelayed(unsigned long intervalMillis, void (*onEvent)(TimerInformation* Sender))
+void TimedEventClass::addDelayed(unsigned long intervalMillis, void (*onEvent)(TimerInformation* Sender))
 {
   this->addDelayed(DEFAULT_TIMER_ID, intervalMillis, onEvent);
 	this->currentTimer->enabled = true;
